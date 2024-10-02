@@ -61,7 +61,7 @@ function ProductDetail(props) {
                                 </div>
                             </div>
 
-                            <p className={classnames(style.price)}><span className={[classnames(style.priceLabel)]}>Price: </span><span>{`${product.price.toLocaleString('it-IT', { style: 'currency', currency: 'USD' })} ${product.currency}`}</span></p>
+                            <p className={classnames(style.price)}><span className={[classnames(style.priceLabel)]}>Price: </span><span>{`${product.price.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}`}</span></p>
 
                             <div className={style.desc}>{product.description ? product.description : "No description"}</div>
 
@@ -73,7 +73,7 @@ function ProductDetail(props) {
                                         updateProductDetail({ quantity: selectedProductDetail.quantity - 1 })
                                     }
                                 }>-</button>
-                                <span className={classnames(style.quantity)}>{selectedProductDetail.quantity}</span>
+                                <div className={classnames(style.quantity)}>{selectedProductDetail.quantity}</div>
                                 <button className={classnames(style.quantityBtn)} onClick={
                                     () => {
                                         if (selectedProductDetail.quantity === 20) return;
@@ -93,7 +93,7 @@ function ProductDetail(props) {
                                         cartItems.push({ ...product, ...selectedProductDetail });
                                     } else {
                                         const productInCart = cartItems.find(x => x.id === props.productID && x.size === selectedProductDetail.size);
-                                        
+
                                         if (productInCart) {
                                             productInCart.quantity = productInCart.quantity + selectedProductDetail.quantity;
                                         } else {
