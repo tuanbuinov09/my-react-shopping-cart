@@ -23,6 +23,12 @@
   }
 }
 
+.noItem {
+  margin: 20px;
+  padding: 0 0 36px 0;
+  text-align: center;
+}
+
 .cartItem {
   display: flex;
   border: 1px solid #bbbbbb;
