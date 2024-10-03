@@ -1,5 +1,5 @@
-import productImage1 from "./assets/khoac-m-dutti-tay-chun-den_12.jpeg";
-import productImage2 from "./assets/so-mi-lacoste-trang.webp";
+import productImage1 from "../assets/khoac-m-dutti-tay-chun-den_12.jpeg";
+import productImage2 from "../assets/so-mi-lacoste-trang.webp";
 
 export const products = [
   {

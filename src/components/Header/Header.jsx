@@ -2,7 +2,7 @@ import cartIcon from '../../assets/icons8-cart-96.png';
 import classNames from 'classnames';
 import * as style from './Header.module.css';
 import { useContext, useState } from 'react';
-import ShoppingCartContext from '../../ShoppingCartContext';
+import ShoppingCartContext from '../../contexts/ShoppingCartContext';
 import Cart from '../Cart/Cart';
 
 function Header() {
