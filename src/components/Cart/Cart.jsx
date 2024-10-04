@@ -2,8 +2,11 @@ import { useContext } from "react";
 import ShoppingCartContext from "../../contexts/ShoppingCartContext";
 import * as style from './Cart.module.css';
 import CartItem from "./CartItem/CartItem";
+import { useNavigate } from "react-router-dom";
 
-function Cart() {
+function Cart(props) {
+    const navigate = useNavigate();
+
     const { cartItems, totalCartQuantity, updateCartItems } = useContext(ShoppingCartContext);
 
     return (
@@ -12,7 +15,7 @@ function Cart() {
                 <div className={style.cartItems}>
                     {totalCartQuantity === 0 ? <h3 className={style.noItem}>No item in cart.</h3> : <></>}
                     {cartItems.map((item) => {
-                        return <CartItem key={item.id + item.size} cartItem={item} />;
+                        return <CartItem key={`${item.id} + ${item.size}`} cartItem={item} />;
                     })}
                 </div>
                 <div className={style.btnContainer}>
@@ -21,9 +24,8 @@ function Cart() {
                         <button
                             className={style.checkoutBtn}
                             onClick={() => {
-                                const selection = confirm("Proceed?");
-
-                                selection && updateCartItems([]);
+                                navigate('checkout');
+                                props.toggleOpenCart();
                             }}>Check Out</button>
                         : <></>}
                 </div>

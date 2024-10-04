@@ -4,6 +4,7 @@ import * as style from './Header.module.css';
 import { useContext, useState } from 'react';
 import ShoppingCartContext from '../../contexts/ShoppingCartContext';
 import Cart from '../Cart/Cart';
+import { NavLink } from 'react-router-dom';
 
 function Header() {
     const { totalCartQuantity } = useContext(ShoppingCartContext);
@@ -17,6 +18,7 @@ function Header() {
     return (
         <header className={classNames(style.header)}>
             <div className={classNames(style.left)}>
+                <NavLink to={''} className={style.homeLink}>HOME</NavLink>
             </div>
 
             <div className={classNames(style.right)}>
@@ -27,7 +29,7 @@ function Header() {
 
                 </div>
             </div>
-            {showCart && <Cart />}
+            {showCart && <Cart toggleOpenCart={toggleOpenCart} />}
         </header >
     );
 }

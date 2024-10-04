@@ -12,7 +12,9 @@
 }
 
 .title {
+  margin-top: 0;
   margin-bottom: 16px;
+  font-size: 22px;
 }
 
 .confirmBtnContainer {
@@ -55,7 +57,7 @@
   font-size: 18px;
 }
 
-h4 {
+.container h4 {
   margin: 0;
 }
 
@@ -91,4 +93,15 @@ h4 {
   color: crimson;
   font-weight: bold;
   margin-bottom: 10px;
+}
+
+a {
+  color: #009eb6;
+  font-weight: bold;
+  transition: all 0.2s ease-out;
+}
+
+a:hover {
+  text-decoration: none;
+  opacity: 0.7;
 }

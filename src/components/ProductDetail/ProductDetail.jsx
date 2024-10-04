@@ -2,10 +2,11 @@ import classNames from "classnames";
 import { useEffect, useState, useLayoutEffect, useContext } from 'react';
 import * as style from './ProductDetail.module.css';
 import { products } from "../../data/mock-data";
-import PropTypes from 'prop-types';
 import ShoppingCartContext from "../../contexts/ShoppingCartContext";
+import { useParams } from "react-router-dom";
 
-function ProductDetail(props) {
+function ProductDetail() {
+    const { productID } = useParams();
     const { cartItems, updateCartItems } = useContext(ShoppingCartContext);
 
     const [product, setProduct] = useState(null);
@@ -16,12 +17,14 @@ function ProductDetail(props) {
     });
 
     useLayoutEffect(() => {
-        const productsFromDataSource = products.find(x => x.id === props.productID);
+        const productsFromDataSource = products.find(x => x.id === Number.parseInt(productID));
+
         setProduct(productsFromDataSource);
-    }, []);
+        setSelectedProductDetail({ ...selectedProductDetail, size: productsFromDataSource.sizes[0] });
+    }, [productID]);
 
     useEffect(() => {
-        console.log("selected:", selectedProductDetail);
+        // console.log("selected:", selectedProductDetail);
 
     }, [selectedProductDetail]);
 
@@ -39,7 +42,7 @@ function ProductDetail(props) {
         if (cartItems.length === 0) {
             cartItems.push({ ...product, ...selectedProductDetail, dateAdded: Date.now() });
         } else {
-            const productInCart = cartItems.find(x => x.id === props.productID && x.size === selectedProductDetail.size);
+            const productInCart = cartItems.find(x => x.id === product.id && x.size === selectedProductDetail.size);
 
             if (productInCart) {
                 productInCart.quantity = productInCart.quantity + selectedProductDetail.quantity;
@@ -121,9 +124,5 @@ function ProductDetail(props) {
         </>
     );
 }
-
-ProductDetail.propTypes = {
-    productID: PropTypes.number
-};
 
 export default ProductDetail;

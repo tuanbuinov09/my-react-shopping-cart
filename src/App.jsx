@@ -5,6 +5,8 @@ import ShoppingCartContext from "./contexts/ShoppingCartContext";
 import Header from './components/Header/Header';
 import useLocalStorage from './hooks/useLocalStorage';
 import Checkout from './components/Checkout/Checkout';
+import { Routes, Route } from 'react-router-dom';
+import Home from './components/Home/Home';
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
@@ -52,7 +54,7 @@ function App() {
 
     setCartItems(newCartItems);
     setTotalCartQuantity(totalQuantity);
-    setLocalStorageCartItems(cartItems);
+    setLocalStorageCartItems(newCartItems);
   };
 
   useEffect(() => {
@@ -65,10 +67,11 @@ function App() {
     <>
       <ShoppingCartContext.Provider value={value}>
         <Header />
-
-        <Checkout />
-        <ProductDetail productID={1} />
-        <ProductDetail productID={2} />
+        <Routes>
+          <Route index element={<Home />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/product/:productID" element={<ProductDetail />} />
+        </Routes>
       </ShoppingCartContext.Provider>
     </>
   )

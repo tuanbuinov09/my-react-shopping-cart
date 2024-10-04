@@ -7,6 +7,7 @@ import useLocalStorage from '../../hooks/useLocalStorage';
 function Checkout() {
     const { cartItems, totalCartQuantity, updateCartItems } = useContext(ShoppingCartContext);
     const [latestCheckoutAddress, setLatestCheckoutAddress] = useLocalStorage('latestCheckoutAddress', {});
+    const [_, setLocalCartItems] = useLocalStorage('cartItems', []);
 
     const totalCartPrice = cartItems.reduce((acc, item) => {
         return acc + item.price * item.quantity;
@@ -33,7 +34,6 @@ function Checkout() {
     });
 
     useEffect(() => {
-        console.error(errorMessages);
     }, [errorMessages]);
 
     const validate = () => {
@@ -74,7 +74,11 @@ function Checkout() {
                 <div className={style.cartItems}>
                     <h3 className={style.title}>ITEMS</h3>
 
-                    {totalCartQuantity === 0 ? <h3 className={style.noItem}>No item in cart.</h3> : <></>}
+                    {totalCartQuantity === 0
+                        ? <>
+                            <h3 className={style.noItem}>No item in cart.</h3>
+                            <a href='/'>{`Back to shopping`}</a> </>
+                        : <></>}
                     {cartItems.map((item) => {
                         return <CheckoutItem key={item.id + item.size} cartItem={item} />;
                     })}
@@ -96,7 +100,10 @@ function Checkout() {
                                 const selection = confirm("Confirmation on your order?");
                                 if (selection) {
                                     updateCartItems([]);
+
+                                    setLocalCartItems([]);
                                     setLatestCheckoutAddress(inputs);
+
                                     alert("Success!!");
                                 };
 
@@ -105,57 +112,55 @@ function Checkout() {
                     : <></>}
             </div>
             <div className={style.right}>
-                {totalCartQuantity > 0
-                    ? <form>
-                        <h3 className={style.title}>SHIPPING INFORMATION</h3>
+                <form>
+                    <h3 className={style.title}>SHIPPING INFORMATION</h3>
 
-                        <div className={style.inputGroup}>
-                            <label className={style.label}>Name: </label>
-                            <input
-                                type="text"
-                                name='name'
-                                value={inputs.name}
-                                className={style.textInput}
-                                onChange={(e) => {
-                                    setErrorMessages({ ...errorMessages, name: "" });
-                                    updateInputs(e.target.name, e.target.value);
-                                }} />
+                    <div className={style.inputGroup}>
+                        <label className={style.label}>Name: </label>
+                        <input
+                            type="text"
+                            name='name'
+                            value={inputs.name}
+                            className={style.textInput}
+                            onChange={(e) => {
+                                setErrorMessages({ ...errorMessages, name: "" });
+                                updateInputs(e.target.name, e.target.value);
+                            }} />
 
-                            <p className={style.errorMessage}>{errorMessages.name ? errorMessages.name : ""}</p>
-                        </div>
+                        <p className={style.errorMessage}>{errorMessages.name ? errorMessages.name : ""}</p>
+                    </div>
 
-                        <div className={style.inputGroup}>
-                            <label className={style.label}>Address: </label>
-                            <input
-                                type="text"
-                                name='address'
-                                value={inputs.address}
-                                className={style.textInput}
-                                onChange={(e) => {
-                                    setErrorMessages({ ...errorMessages, address: "" });
-                                    updateInputs(e.target.name, e.target.value);
-                                }} />
+                    <div className={style.inputGroup}>
+                        <label className={style.label}>Address: </label>
+                        <input
+                            type="text"
+                            name='address'
+                            value={inputs.address}
+                            className={style.textInput}
+                            onChange={(e) => {
+                                setErrorMessages({ ...errorMessages, address: "" });
+                                updateInputs(e.target.name, e.target.value);
+                            }} />
 
-                            <p className={style.errorMessage}>{errorMessages.address ? errorMessages.address : ""}</p>
-                        </div>
+                        <p className={style.errorMessage}>{errorMessages.address ? errorMessages.address : ""}</p>
+                    </div>
 
-                        <div className={style.inputGroup}>
-                            <label className={style.label}>Phone number: </label>
-                            <input
-                                type="tel"
-                                name='phoneNumber'
-                                value={inputs.phoneNumber}
-                                className={style.textInput}
-                                onChange={(e) => {
-                                    setErrorMessages({ ...errorMessages, phoneNumber: "" });
-                                    updateInputs(e.target.name, e.target.value.trim());
-                                }} />
+                    <div className={style.inputGroup}>
+                        <label className={style.label}>Phone number: </label>
+                        <input
+                            type="tel"
+                            name='phoneNumber'
+                            value={inputs.phoneNumber}
+                            className={style.textInput}
+                            onChange={(e) => {
+                                setErrorMessages({ ...errorMessages, phoneNumber: "" });
+                                updateInputs(e.target.name, e.target.value.trim());
+                            }} />
 
-                            <p className={style.errorMessage}>{errorMessages.phoneNumber ? errorMessages.phoneNumber : ""}</p>
-                        </div>
+                        <p className={style.errorMessage}>{errorMessages.phoneNumber ? errorMessages.phoneNumber : ""}</p>
+                    </div>
 
-                    </form>
-                    : <></>}
+                </form>
             </div>
         </div>
     );
